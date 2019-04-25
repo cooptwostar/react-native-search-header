@@ -27,6 +27,7 @@ declare module "react-native-search-header" {
     iconImageComponents?: Array<any>;
     onClearSuggesstion?: Function;
     onGetAutocompletions?: Function;
+    onChangeText?: Function;
     onClear?: Function;
     onSearch?: Function;
     onEnteringSearch?: Function;
@@ -34,6 +35,7 @@ declare module "react-native-search-header" {
     onBlur?: Function;
     onHide?: Function;
     onShow?: Function;
+    style?: StyleProp<any>;
   }
   export default class extends Component<SearchHeaderProps> {
     isHidden(): Boolean;

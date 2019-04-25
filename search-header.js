@@ -73,7 +73,7 @@ const DEFAULT_DROP_SHADOW_STYLE = {
 const DEFAULT_SEARCH_HEADER_VIEW_STYLE = {
     container: {
         ...DEFAULT_DROP_SHADOW_STYLE,
-        position: `absolute`,
+        //position: `absolute`,
         alignItems: `stretch`,
         justifyContent: `flex-start`,
         zIndex: 10,
@@ -307,6 +307,7 @@ export default class SearchHeader extends Component {
         iconImageComponents: PropTypes.array,
         onClearSuggesstion: PropTypes.func,
         onGetAutocompletions: PropTypes.func,
+        onChangeText: PropTypes.func,
         onClear: PropTypes.func,
         onSearch: PropTypes.func,
         onEnteringSearch: PropTypes.func,
@@ -336,6 +337,7 @@ export default class SearchHeader extends Component {
         iconImageComponents: DEFAULT_ICON_IMAGE_COMPONENTS,
         onClearSuggesstion: () => false,
         onGetAutocompletions: () => [],
+        onChangeText: () => [],
         onClear: () => null,
         onSearch: () => null,
         onEnteringSearch: () => null,
@@ -581,9 +583,10 @@ export default class SearchHeader extends Component {
         const component = this;
         const {
             onGetAutocompletions,
-            onEnteringSearch
+            onEnteringSearch,
+            onChangeText,
         } = component.props;
-
+        onChangeText(value);
         const fetchSearchAutocompletions = async function () {
             const autocompleteTexts = await onGetAutocompletions(value);
             if (Array.isArray(autocompleteTexts) && autocompleteTexts.length) {
