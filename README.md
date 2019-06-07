@@ -1,3 +1,7 @@
+No longer hardcoded as absolutely positioned at the top.
+Added onTextChanged support.
+Works with react-native-web
+
 # react-native-seach-header
 [![npm version](https://img.shields.io/npm/v/react-native-search-header.svg?style=flat)](https://www.npmjs.com/package/react-native-search-header)
 [![npm downloads](https://img.shields.io/npm/dm/react-native-search-header.svg?style=flat-square)](https://www.npmjs.com/package/react-native-search-header)
