@@ -26,7 +26,16 @@
 
 import React from 'react';
 
-import ReactNative from 'react-native'; // eslint-disable-line
+import {
+    Text,
+    Image,
+    View,
+    FlatList,
+    TextInput,
+    TouchableOpacity,
+    Dimensions,
+    PixelRatio
+} from 'react-native'; // eslint-disable-line
 
 import PropTypes from 'prop-types';
 
@@ -39,21 +48,6 @@ import closeIcon from './assets/icons/close-3x.png';
 import historyIcon from './assets/icons/history-3x.png';
 import recallIcon from './assets/icons/recall-3x.png';
 import searchIcon from './assets/icons/search-3x.png';
-
-const {
-    Component
-} = React;
-
-const {
-    Text,
-    Image,
-    View,
-    FlatList,
-    TextInput,
-    TouchableOpacity,
-    Dimensions,
-    PixelRatio
-} = ReactNative;
 
 const DEFAULT_ANIMATION_DURATION_MS = 300;
 
@@ -149,9 +143,9 @@ const DEFAULT_ICON_IMAGE_COMPONENTS = [{
     render: (style) => {
         return (
             <Image
-                resizeMode = 'cover'
-                source = { closeIcon }
-                style = { style }
+                resizeMode='cover'
+                source={closeIcon}
+                style={style}
             />
         );
     }
@@ -161,9 +155,9 @@ const DEFAULT_ICON_IMAGE_COMPONENTS = [{
     render: (style) => {
         return (
             <Image
-                resizeMode = 'cover'
-                source = { hideIcon }
-                style = { style }
+                resizeMode='cover'
+                source={hideIcon}
+                style={style}
             />
         );
     }
@@ -173,9 +167,9 @@ const DEFAULT_ICON_IMAGE_COMPONENTS = [{
     render: (style) => {
         return (
             <Image
-                resizeMode = 'cover'
-                source = { historyIcon }
-                style = { style }
+                resizeMode='cover'
+                source={historyIcon}
+                style={style}
             />
         );
     }
@@ -185,9 +179,9 @@ const DEFAULT_ICON_IMAGE_COMPONENTS = [{
     render: (style) => {
         return (
             <Image
-                resizeMode = 'cover'
-                source = { searchIcon }
-                style = { style }
+                resizeMode='cover'
+                source={searchIcon}
+                style={style}
             />
         );
     }
@@ -197,15 +191,15 @@ const DEFAULT_ICON_IMAGE_COMPONENTS = [{
     render: (style) => {
         return (
             <Image
-                resizeMode = 'cover'
-                source = { recallIcon }
-                style = { style }
+                resizeMode='cover'
+                source={recallIcon}
+                style={style}
             />
         );
     }
 }];
 
-function readjustStyle (newStyle = {
+function readjustStyle(newStyle = {
     inputColor: DEFAULT_SEARCH_HEADER_VIEW_STYLE.input.color,
     inputBgColor: DEFAULT_SEARCH_HEADER_VIEW_STYLE.input.backgroundColor,
     suggestionEntryColor: DEFAULT_SEARCH_HEADER_VIEW_STYLE.suggestionEntry.color,
@@ -284,7 +278,7 @@ function readjustStyle (newStyle = {
     return adjustedStyle;
 }
 
-export default class SearchHeader extends Component {
+export default class SearchHeader extends React.Component {
     static propTypes = {
         inputColor: PropTypes.string,
         inputBgColor: PropTypes.string,
@@ -302,7 +296,7 @@ export default class SearchHeader extends Component {
         enableSuggestion: PropTypes.bool,
         suggestionHistoryEntryRollOverCount: PropTypes.number,
         placeholder: PropTypes.string,
-        entryAnimation: PropTypes.oneOf([ `from-left-side`, `from-right-side` ]),
+        entryAnimation: PropTypes.oneOf([`from-left-side`, `from-right-side`]),
         iconImageComponents: PropTypes.array,
         onClearSuggesstion: PropTypes.func,
         onGetAutocompletions: PropTypes.func,
@@ -345,7 +339,7 @@ export default class SearchHeader extends Component {
         onHide: () => null,
         onShow: () => null
     }
-    static getDerivedStateFromProps (props, state) {
+    static getDerivedStateFromProps(props, state) {
         const {
             inputColor,
             inputBgColor,
@@ -395,7 +389,7 @@ export default class SearchHeader extends Component {
             })
         };
     }
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.refCache = {};
         this.state = {
@@ -726,7 +720,7 @@ export default class SearchHeader extends Component {
             });
         }
     }
-    componentDidUpdate () {
+    componentDidUpdate() {
         const component = this;
         const {
             enableSuggestion
@@ -766,12 +760,12 @@ export default class SearchHeader extends Component {
             }
         }
     }
-    componentDidUnMount () {
+    componentDidUnMount() {
         const component = this;
 
         component.refCache = {};
     }
-    renderInput () {
+    renderInput() {
         const component = this;
         const {
             placeholderColor,
@@ -789,10 +783,10 @@ export default class SearchHeader extends Component {
         } = component.state;
 
         return (
-            <View style = { adjustedStyle.header }>
-                <View style = { adjustedStyle.action }>
+            <View style={adjustedStyle.header}>
+                <View style={adjustedStyle.action}>
                     {
-                        !persistent ? <TouchableOpacity onPress = {() => {
+                        !persistent ? <TouchableOpacity onPress={() => {
                             component.hide();
                         }}>
                             {
@@ -803,44 +797,44 @@ export default class SearchHeader extends Component {
                                     ]);
                                 })[0]
                             }
-                        </TouchableOpacity> : <TouchableOpacity onPress = {() => {
+                        </TouchableOpacity> : <TouchableOpacity onPress={() => {
                             onSearch({
                                 nativeEvent: {
                                     text: input.value
                                 }
                             });
                         }}>
-                            {
-                                customIconImageComponents.filter((iconImageComponent) => iconImageComponent.name === `search`).map((iconImageComponent) => {
-                                    return iconImageComponent.render([
-                                        adjustedStyle.icon,
-                                        iconImageComponent.customStyle
-                                    ]);
-                                })[0]
-                            }
-                        </TouchableOpacity>
+                                {
+                                    customIconImageComponents.filter((iconImageComponent) => iconImageComponent.name === `search`).map((iconImageComponent) => {
+                                        return iconImageComponent.render([
+                                            adjustedStyle.icon,
+                                            iconImageComponent.customStyle
+                                        ]);
+                                    })[0]
+                                }
+                            </TouchableOpacity>
                     }
                 </View>
                 <TextInput
-                    ref = {(componentRef) => {
+                    ref={(componentRef) => {
                         component.refCache[`text-input`] = componentRef;
                     }}
-                    autoFocus = { autoFocus }
-                    autoCorrect = { autoCorrect }
-                    returnKeyType = 'search'
-                    underlineColorAndroid = 'transparent'
-                    placeholder = { placeholder }
-                    placeholderTextColor = { placeholderColor }
-                    value = { input.value }
-                    style = { adjustedStyle.input }
-                    onFocus = { component.onFocus }
-                    onBlur = { component.onBlur }
-                    onChangeText = { component.onEditting }
-                    onSubmitEditing = { component.onSubmitEditing }
+                    autoFocus={autoFocus}
+                    autoCorrect={autoCorrect}
+                    returnKeyType='search'
+                    underlineColorAndroid='transparent'
+                    placeholder={placeholder}
+                    placeholderTextColor={placeholderColor}
+                    value={input.value}
+                    style={adjustedStyle.input}
+                    onFocus={component.onFocus}
+                    onBlur={component.onBlur}
+                    onChangeText={component.onEditting}
+                    onSubmitEditing={component.onSubmitEditing}
                 />
                 {
-                    input.value === `` ? <View style = { adjustedStyle.action } /> : <View style = { adjustedStyle.action }>
-                        <TouchableOpacity onPress = {() => {
+                    input.value === `` ? <View style={adjustedStyle.action} /> : <View style={adjustedStyle.action}>
+                        <TouchableOpacity onPress={() => {
                             component.clear();
                         }}>
                             {
@@ -857,7 +851,7 @@ export default class SearchHeader extends Component {
             </View>
         );
     }
-    renderSuggestions () {
+    renderSuggestions() {
         const component = this;
         const {
             onEnteringSearch,
@@ -883,127 +877,127 @@ export default class SearchHeader extends Component {
         });
 
         return null;
-            // <AnimatedView
-            //     ref = {(componentRef) => {
-            //         component.refCache[`animated-suggestion-view`] = componentRef;
-            //     }}
-            //     duration = { 300 }
-            //     useNativeDriver = { false }
-            //     style = { adjustedStyle.suggestion }
-            // >
-            //     <FlatList
-            //         data = { suggestionEntries }
-            //         renderItem = {(listData) => {
-            //             const entry = listData.item;
+        // <AnimatedView
+        //     ref = {(componentRef) => {
+        //         component.refCache[`animated-suggestion-view`] = componentRef;
+        //     }}
+        //     duration = { 300 }
+        //     useNativeDriver = { false }
+        //     style = { adjustedStyle.suggestion }
+        // >
+        //     <FlatList
+        //         data = { suggestionEntries }
+        //         renderItem = {(listData) => {
+        //             const entry = listData.item;
 
-            //             return (
-            //                 <TouchableOpacity
-            //                     key = { listData.key }
-            //                     onPress = {() => {
-            //                         const textInput = component.refCache[`text-input`];
+        //             return (
+        //                 <TouchableOpacity
+        //                     key = { listData.key }
+        //                     onPress = {() => {
+        //                         const textInput = component.refCache[`text-input`];
 
-            //                         if (textInput !== undefined) {
-            //                             textInput.setNativeProps({
-            //                                 text: entry.value
-            //                             });
-            //                         }
+        //                         if (textInput !== undefined) {
+        //                             textInput.setNativeProps({
+        //                                 text: entry.value
+        //                             });
+        //                         }
 
-            //                         component.setState((prevState) => {
-            //                             return {
-            //                                 input: {
-            //                                     ...prevState.input,
-            //                                     value: entry.value,
-            //                                     valueChanged: prevState.input.value !== entry.value,
-            //                                     focused: false
-            //                                 },
-            //                                 suggestion: {
-            //                                     ...prevState.suggestion,
-            //                                     visible: false,
-            //                                     autocompletes: []
-            //                                 }
-            //                             };
-            //                         });
+        //                         component.setState((prevState) => {
+        //                             return {
+        //                                 input: {
+        //                                     ...prevState.input,
+        //                                     value: entry.value,
+        //                                     valueChanged: prevState.input.value !== entry.value,
+        //                                     focused: false
+        //                                 },
+        //                                 suggestion: {
+        //                                     ...prevState.suggestion,
+        //                                     visible: false,
+        //                                     autocompletes: []
+        //                                 }
+        //                             };
+        //                         });
 
-            //                         onEnteringSearch({
-            //                             nativeEvent: {
-            //                                 text: entry.value
-            //                             }
-            //                         });
-            //                         onSearch({
-            //                             nativeEvent: {
-            //                                 text: entry.value
-            //                             }
-            //                         });
-            //                     }}>
-            //                     <View style = {{
-            //                         flexDirection: `row`,
-            //                         justifyContent: `center`,
-            //                         alignItems: `center`,
-            //                         backgroundColor: `transparent`
-            //                     }}>
-            //                         {
-            //                             customIconImageComponents.filter((iconImageComponent) => entry.historyType ? iconImageComponent.name === `history` : iconImageComponent.name === `search`).map((iconImageComponent) => {
-            //                                 return iconImageComponent.render([
-            //                                     adjustedStyle.icon,
-            //                                     iconImageComponent.customStyle
-            //                                 ]);
-            //                             })[0]
-            //                         }
-            //                         <Text
-            //                             numberOfLines = { 1 }
-            //                             ellipsizeMode = 'tail'
-            //                             style = { adjustedStyle.suggestionEntry }
-            //                         >{ entry.value }</Text>
-            //                         <View style = {{
-            //                             flexDirection: `row`,
-            //                             alignItems: `center`,
-            //                             justifyContent: `center`,
-            //                             minWidth: 46,
-            //                             minHeight: 46,
-            //                             backgroundColor: `transparent`
-            //                         }}>
-            //                             <TouchableOpacity onPress = {() => {
-            //                                 const textInput = component.refCache[`text-input`];
+        //                         onEnteringSearch({
+        //                             nativeEvent: {
+        //                                 text: entry.value
+        //                             }
+        //                         });
+        //                         onSearch({
+        //                             nativeEvent: {
+        //                                 text: entry.value
+        //                             }
+        //                         });
+        //                     }}>
+        //                     <View style = {{
+        //                         flexDirection: `row`,
+        //                         justifyContent: `center`,
+        //                         alignItems: `center`,
+        //                         backgroundColor: `transparent`
+        //                     }}>
+        //                         {
+        //                             customIconImageComponents.filter((iconImageComponent) => entry.historyType ? iconImageComponent.name === `history` : iconImageComponent.name === `search`).map((iconImageComponent) => {
+        //                                 return iconImageComponent.render([
+        //                                     adjustedStyle.icon,
+        //                                     iconImageComponent.customStyle
+        //                                 ]);
+        //                             })[0]
+        //                         }
+        //                         <Text
+        //                             numberOfLines = { 1 }
+        //                             ellipsizeMode = 'tail'
+        //                             style = { adjustedStyle.suggestionEntry }
+        //                         >{ entry.value }</Text>
+        //                         <View style = {{
+        //                             flexDirection: `row`,
+        //                             alignItems: `center`,
+        //                             justifyContent: `center`,
+        //                             minWidth: 46,
+        //                             minHeight: 46,
+        //                             backgroundColor: `transparent`
+        //                         }}>
+        //                             <TouchableOpacity onPress = {() => {
+        //                                 const textInput = component.refCache[`text-input`];
 
-            //                                 if (textInput !== undefined) {
-            //                                     textInput.setNativeProps({
-            //                                         text: entry.value
-            //                                     });
-            //                                 }
+        //                                 if (textInput !== undefined) {
+        //                                     textInput.setNativeProps({
+        //                                         text: entry.value
+        //                                     });
+        //                                 }
 
-            //                                 component.setState((prevState) => {
-            //                                     return {
-            //                                         input: {
-            //                                             ...prevState.input,
-            //                                             value: entry.value,
-            //                                             valueChanged: prevState.input.value !== entry.value
-            //                                         }
-            //                                     };
-            //                                 });
-            //                             }}>
-            //                                 {
-            //                                     customIconImageComponents.filter((iconImageComponent) => iconImageComponent.name === `recall`).map((iconImageComponent) => {
-            //                                         return iconImageComponent.render([
-            //                                             adjustedStyle.icon,
-            //                                             iconImageComponent.customStyle
-            //                                         ]);
-            //                                     })[0]
-            //                                 }
-            //                             </TouchableOpacity>
-            //                         </View>
-            //                     </View>
-            //                 </TouchableOpacity>
-            //             );
-            //         }}
-            //         style = {{
-            //             flexDirection: `column`,
-            //             backgroundColor: `transparent`
-            //         }}
-            //     />
-            // </AnimatedView>
+        //                                 component.setState((prevState) => {
+        //                                     return {
+        //                                         input: {
+        //                                             ...prevState.input,
+        //                                             value: entry.value,
+        //                                             valueChanged: prevState.input.value !== entry.value
+        //                                         }
+        //                                     };
+        //                                 });
+        //                             }}>
+        //                                 {
+        //                                     customIconImageComponents.filter((iconImageComponent) => iconImageComponent.name === `recall`).map((iconImageComponent) => {
+        //                                         return iconImageComponent.render([
+        //                                             adjustedStyle.icon,
+        //                                             iconImageComponent.customStyle
+        //                                         ]);
+        //                                     })[0]
+        //                                 }
+        //                             </TouchableOpacity>
+        //                         </View>
+        //                     </View>
+        //                 </TouchableOpacity>
+        //             );
+        //         }}
+        //         style = {{
+        //             flexDirection: `column`,
+        //             backgroundColor: `transparent`
+        //         }}
+        //     />
+        // </AnimatedView>
         // );
     }
-    render () {
+    render() {
         const component = this;
         const {
             enableSuggestion
@@ -1015,13 +1009,13 @@ export default class SearchHeader extends Component {
 
         return (
             <AnimatedView
-                ref = {(componentRef) => {
+                ref={(componentRef) => {
                     component.refCache[`animated-search-header-view`] = componentRef;
                 }}
-                style = { adjustedStyle.container }
-                duration = { 300 }
-                useNativeDriver = { true }
-                onStartShouldSetResponder = {() => {
+                style={adjustedStyle.container}
+                duration={300}
+                useNativeDriver={true}
+                onStartShouldSetResponder={() => {
                     dismissKeyboard();
                 }}
             >
